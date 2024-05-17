@@ -1,0 +1,15 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Add News</title>
+</head>
+<body>
+    <h1>Add News</h1>
+    <form method="post" action="{% url 'news:create_data' %}">
+        {% csrf_token %}
+        {{ form.as_p }}
+        <button type="submit">Add News</button>
+    </form>
+    <a href="{% url 'news:list_news' %}">Back to News List</a>
+</body>
+</html>

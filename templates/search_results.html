@@ -1,0 +1,197 @@
+<!DOCTYPE html>
+<html lang="uz">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Mahsulot Ko'rish</title>
+    <link rel="stylesheet" href="style.css">
+</head>
+<body>
+    <style>
+        /* style.css */
+body {
+    font-family: Arial, sans-serif;
+    margin: 0;
+    padding: 0;
+    background: #f4f4f4;
+}
+
+header {
+    background: #007BFF;
+    color: white;
+    padding: 10px 20px;
+    text-align: center;
+}
+
+.product-container {
+    display: flex;
+    justify-content: center;
+    padding: 20px;
+    background: white;
+    margin: 20px;
+}
+
+.product-image {
+    margin-right: 50px;
+    max-width: 50%;
+}
+
+.product-image img {
+    width: 100%;
+    height: auto;
+}
+
+.product-details {
+    max-width: 50%;
+    padding: 20px;
+}
+
+.product-details h2 {
+    color: #333;
+}
+
+
+
+.price {
+    color: #007BFF;
+    font-size: 24px;
+}
+
+.description {
+    margin: 20px 0;
+    line-height: 1.5;
+}
+
+button {
+    background: #007BFF;
+    color: white;
+    border: none;
+    padding: 10px 20px;
+    cursor: pointer;
+    font-size: 16px;
+}
+
+button:hover {
+    background: #0056b3;
+}
+
+footer {
+    text-align: center;
+    padding: 10px 0;
+    background: #007BFF;
+    color: white;
+    position: fixed;
+    width: 100%;
+    bottom: 0;
+}
+
+a{
+    text-decoration: none;
+    color: white;
+}   
+.comments{
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.titleComments{
+    text-align: center;
+    font-size: 33px;
+    margin-bottom: 44px
+}
+
+form{
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+textarea{
+    outline: none;
+}
+
+.comments_menu{
+    position: absolute;
+    width: 500px;
+    height: 400px;
+    background-color: rgb(255, 255, 255);
+    margin-left: 30px;
+    overflow-y: auto;
+}
+.comments_view_title{
+    text-align: center;
+    font-family: sans-serif;
+}
+
+.menu_btn{
+    text-align: center;
+    margin-left: 0px;
+}
+.n{
+    margin-left: 20px;
+}
+
+    </style>
+    <header>
+        <h1>Mahsulot Ta'rifi</h1>
+    </header>
+    {%for r in results%}
+    <div class="product-container">
+        <div class="product-image">
+            <img style="width: 400px;" src="{{r.image.url}}" alt="Mahsulot nomi">
+        </div>
+        <div class="product-details">
+            <h2>Title: {{r.title}}</h2>
+            <p class="description">.
+               Info: {{r.info}}
+            </p>
+            <p class="price">Who regions: {{r.regions}}</p>
+            <button><a href="{%url 'news:list_news'%}">Orqaga</a></button>
+        </div>
+    </div>
+
+    {%endfor%}
+
+    
+    {%if user.is_authenticated%}
+
+    <div class="comments_menu">
+        <h2 class="comments_view_title">Comments View</h2>
+            {%if news_view.comments.all%}
+            <ul>
+                {%for i in news_view.comments.all%}
+                    <li>
+                        <h4 class="user">{{i.user.username}}</h4>
+                        <p class="comments_text">{{i.comment}}</p>
+                        <small>{{i.created_at}}</small>
+                    </li>
+                {%endfor%}
+            </ul>
+            {%else%}
+            <p>Not comments</p>
+            <h1>Hozir qidiruv qismidagi komment ishlatilmadi yoki hato bor 500 hato</h1>
+            {%endif%}
+        </div>
+    </div>
+
+    <div class="titleComments">Comments</div>
+    <div class="comments">
+        <form method="post">
+            {%csrf_token%}
+            <textarea name="comment" id=""></textarea>
+            <button>Send</button>
+        </form>
+    </div>
+    {%else%}
+    <h2 style="text-align: center;">Hurmatli foydalanuvchi siz royhatdan o'tmagansiz Siz comment yoza olmaysiz va kora olamysiz</h2>
+    <div class="menu_btn"><a class="n" style="color: black; text-align: center;" href="{% url 'news:register' %}">Register</a>
+        <a class="n"  style="color: black;" href="{% url 'news:login' %}">Login</a>
+        <a class="n"  style="color: black;" href="{% url 'news:list_news' %}">Royhatan otmaslik</a>
+        </div>
+    {%endif%}
+    <footer>
+        <p>&copy; 2024 Veb-sahifam. Barcha huquqlar himoyalangan.</p>
+    </footer>
+</body>
+</html>

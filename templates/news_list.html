@@ -1,0 +1,95 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+<body>
+    <style>
+        @import url('https://fonts.googleapis.com/css2?family=Space+Mono:ital,wght@0,400;0,700;1,400;1,700&display=swap');
+
+        body { 
+        font-family: 'Space Mono', monospace; 
+        display: flex;
+        flex-direction: column;
+        max-width: 420px;
+        padding: 32px;
+        margin: 60px auto;
+        border: 1px solid #eee;
+        box-shadow: 0px 12px 24px rgba(0, 0, 0, 0.06);
+        }
+
+        * {
+        -webkit-font-smoothing: antialiased;
+        -moz-osx-font-smoothing: grayscale;
+        text-rendering: optimizelegibility;
+        letter-spacing: -0.25px;
+        }
+
+        ol { padding-left: 50px; }
+        li { 
+        color: #4F4F4F; 
+        padding-left: 16px;
+        margin-top: 24px;
+        position: relative;
+        font-size: 16px;
+        line-height: 20px;
+        
+        &:before {
+            content: '';
+            display: block;
+            height: 42px;
+            width: 42px;
+            border-radius: 50%;
+            border: 2px solid #ddd;
+            position: absolute; 
+            top: -12px;
+            left: -46px;
+        }
+        }
+
+        strong { color: #292929; }
+
+        ol.alternating-colors { 
+        li:nth-child(odd):before { border-color: #0BAD02; }
+        li:nth-child(even):before { border-color: #2378D5; }
+        }
+        a{
+            color: #292929;
+            text-decoration: none;
+        }
+    </style>
+     <nav class="navbar navbar-expand-lg navbar-light bg-light">
+        <div class="container-fluid">
+          <a class="navbar-brand" href="#">Navbar</a>
+          <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+            <span class="navbar-toggler-icon"></span>
+          </button>
+          <div class="collapse navbar-collapse container" id="navbarSupportedContent">
+            <ul class="navbar-nav me-auto mb-2 mb-lg-0">
+              <li class="nav-item">
+                <strong><a href="{% url 'news:list_news' %}">Home</a></strong>
+                <strong><a href="{% url 'news:create_data' %}">Add</a></strong>
+              </li>
+            </ul>
+            <form action="{% url 'news:search_data' %}" method="get" class="d-flex">
+                <input type="search" name="q" placeholder="Qidiruv..." aria-label="Search" class="form-control me-2">
+                <button type="submit" class="btn btn-outline-success">Qidirish</button>
+            </form>
+          </div>
+        </div>
+      </nav>
+    <h1>Hi! {{user.username}} || <a href="{% url 'news:logout' %}">logout</a></h1>
+    
+
+    <ol class="alternating-colors">
+    {%for new in news_list%}
+      <li>
+        <strong><a href="{%url 'news_details' pk=new.id%}">{{new.title}}</a></strong>
+        <p>{{new.info }}</p>
+      </li>
+    {%endfor%}
+    </ol>
+</body>
+</html>

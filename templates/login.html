@@ -1,0 +1,15 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Kirish</title>
+</head>
+<body>
+    <h2>Kirish</h2>
+    <form method="POST">
+        {% csrf_token %}
+        {{ form.as_p }}
+        <button type="submit">Kirish</button>
+    </form>
+    <a href="{% url 'news:register' %}">Ro'yxatdan o'tish</a>
+</body>
+</html>
